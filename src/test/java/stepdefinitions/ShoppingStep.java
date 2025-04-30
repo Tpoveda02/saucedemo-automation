@@ -6,6 +6,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.screenplay.actors.OnStage;
+import tasks.LoginTask;
 
 import static constants.Constants.*;
 
@@ -20,7 +21,9 @@ public class ShoppingStep {
 
     @When("ingresa sus credenciales válidas: usuario {string} y contraseña {string}")
     public void ingresaSusCredencialesVálidasUsuarioYContraseña(String userName, String password) {
-
+        OnStage.theActorInTheSpotlight().attemptsTo(
+                LoginTask.withCredentials(userName, password)
+        );
     }
 
 
