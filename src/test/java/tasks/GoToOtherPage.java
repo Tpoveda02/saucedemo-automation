@@ -5,8 +5,11 @@ import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.Tasks;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.targets.Target;
+import net.serenitybdd.screenplay.waits.WaitUntil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
 
 public class GoToOtherPage implements Task {
@@ -27,7 +30,10 @@ public class GoToOtherPage implements Task {
                 description);
 
         LOGGER.debug("Locating navigation link for: {}", description);
-        actor.attemptsTo(Click.on(link));
+        actor.attemptsTo(
+                WaitUntil.the(link, isVisible()).forNoMoreThan(5).seconds(),
+                Click.on(link)
+        );
 
         LOGGER.debug("Navigation action completed for: {}", description);
     }

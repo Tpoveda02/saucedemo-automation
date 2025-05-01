@@ -8,8 +8,4 @@ public class AuthenticationException extends RuntimeException {
         super("Authentication failed for user: " + username, cause);
         this.username = username;
     }
-
-    public String getUsername() {
-        return username;
-    }
 }
