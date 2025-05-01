@@ -43,17 +43,15 @@ public class ShoppingStep {
     @When("agrega los productos {string} y {string} al carrito")
     public void agregaLosProductosYAlCarrito(String product1, String product2) {
         OnStage.theActorInTheSpotlight().attemptsTo(
-                AddProductTask.withProduct(product1),
-                AddProductTask.withProduct(product2),
+                AddProductTask.theProduct(product1),
+                AddProductTask.theProduct(product2),
                 GoToOtherPage.withLink(LINK_GO_CART, "se dirige al carrito de compras")
         );
-
         OnStage.theActorInTheSpotlight().should(
                 GivenWhenThen.seeThat("El producto " + product1 + " está en la lista",
                         AddProductQuestion.verifyIfAddedProduct(product1), equalTo(true)
                 )
         );
-
         OnStage.theActorInTheSpotlight().should(
                 GivenWhenThen.seeThat("El producto " + product2 + " está en la lista",
                         AddProductQuestion.verifyIfAddedProduct(product2), equalTo(true))

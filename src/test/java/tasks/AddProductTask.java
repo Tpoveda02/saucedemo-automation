@@ -20,13 +20,17 @@ public class AddProductTask implements Task {
 
     @Override
     public <T extends Actor> void performAs(T actor) {
-        LOGGER.info("{} está agregando el producto '{}' al carrito de compras", actor.getName(), productName);
+        LOGGER.info("Adding product '{}' to cart by actor '{}'",
+                productName, actor.getName());
 
         actor.attemptsTo(
                 Click.on(BUTTON_ADD_PRODUCT_INTO_CART.of(productName))
         );
+
+        LOGGER.debug("Product '{}' successfully added to cart", productName);
     }
-    public static AddProductTask withProduct(String productName){
+
+    public static AddProductTask theProduct(String productName) {
         return Tasks.instrumented(AddProductTask.class, productName);
     }
 }

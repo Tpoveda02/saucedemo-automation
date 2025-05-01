@@ -26,8 +26,13 @@ public class SendFormCheckoutTask implements Task {
 
     @Override
     public <T extends Actor> void performAs(T actor) {
-        LOGGER.info("{} está completando el formulario de checkout con: Nombre='{}', Apellido='{}', Código Postal='{}'",
-                actor.getName(), firstName, lastName, postalCode);
+        LOGGER.info("Actor '{}' submitting checkout form for {} {} (ZIP: {})",
+                actor.getName(),
+                firstName,
+                lastName,
+                postalCode);
+
+        LOGGER.debug("Executing form submission steps...");
         actor.attemptsTo(
                 Clear.field(FIELD_FIRSTNAME),
                 Enter.theValue(firstName).into(FIELD_FIRSTNAME),
@@ -37,6 +42,8 @@ public class SendFormCheckoutTask implements Task {
                 Enter.theValue(postalCode).into(FIELD_POSTAL_CODE),
                 Click.on(SUBMIT_NEXT)
         );
+
+        LOGGER.info("Checkout form submission completed");
     }
     public static SendFormCheckoutTask withData(String firstName, String lastName, String postalCode){
         return Tasks.instrumented(SendFormCheckoutTask.class, firstName, lastName, postalCode);

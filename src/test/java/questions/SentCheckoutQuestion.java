@@ -22,14 +22,17 @@ public class SentCheckoutQuestion implements Question<Boolean> {
 
     @Override
     public Boolean answeredBy(Actor actor) {
-        try {
-            String actualPrice = PRICE_TOTAL_IN_CHECKOUT.resolveFor(actor).getText();
-            boolean isCorrect = actualPrice.contains(expectedPriceTotal);
-            LOGGER.info("Verificando precio total de compra: Esperado='${}', Actual='{}'", expectedPriceTotal, actualPrice);
-            return isCorrect;
-        } catch (Exception e) {
-            LOGGER.warn("No se pudo obtener el precio total en el checkout. Posible error en la UI.", e);
-            return false;
+        String actualPrice = PRICE_TOTAL_IN_CHECKOUT.resolveFor(actor).getText();
+        LOGGER.debug("Price verification - Expected: {}, Actual: {}",
+                expectedPriceTotal, actualPrice);
+
+        if (!actualPrice.contains(expectedPriceTotal)) {
+            String errorMsg = String.format("Price verification failed. Expected: %s, Actual: %s",
+                    expectedPriceTotal, actualPrice);
+            LOGGER.error(errorMsg);
+            throw new AssertionError(errorMsg);
         }
+
+        return true;
     }
 }

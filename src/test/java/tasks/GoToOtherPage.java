@@ -1,6 +1,5 @@
 package tasks;
 
-import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.Tasks;
@@ -23,8 +22,14 @@ public class GoToOtherPage implements Task {
 
     @Override
     public <T extends Actor> void performAs(T actor) {
-        LOGGER.info("{} está navegando a: {}", actor.getName(), description);
+        LOGGER.info("Actor '{}' initiating navigation to: '{}'",
+                actor.getName(),
+                description);
+
+        LOGGER.debug("Locating navigation link for: {}", description);
         actor.attemptsTo(Click.on(link));
+
+        LOGGER.debug("Navigation action completed for: {}", description);
     }
 
     public static GoToOtherPage withLink(Target link, String description) {
