@@ -8,25 +8,30 @@ import io.cucumber.java.en.When;
 import net.serenitybdd.screenplay.GivenWhenThen;
 import net.serenitybdd.screenplay.actors.OnStage;
 import questions.AddProductQuestion;
+import questions.SentCheckoutQuestion;
 import tasks.AddProductTask;
 import tasks.GoToOtherPage;
 import tasks.LoginTask;
+import tasks.SendFormCheckoutTask;
 
 import static constants.Constants.*;
 import static org.hamcrest.CoreMatchers.equalTo;
+
+import static userinterfaces.CartPage.BUTTON_GO_FORM_CHECKOUT;
+import static userinterfaces.CheckoutOverviewPage.BUTTON_GO_FINISH_CHECKOUT;
 import static userinterfaces.ProductPage.LINK_GO_CART;
 
 public class ShoppingStep {
 
     @Given("un usuario se ingresó a la página de login")
-    public void unUsuarioSeIngresóALaPáginaDeLogin() {
+    public void unUsuarioSeIngresoALaPáginaDeLogin() {
         OnStage.theActorCalled(ACTOR).attemptsTo(
                 OpenBrowser.openBrowser(WEB_URL)
         );
     }
 
     @When("ingresa sus credenciales válidas: usuario {string} y contraseña {string}")
-    public void ingresaSusCredencialesVálidasUsuarioYContraseña(String userName, String password) {
+    public void ingresaSusCredencialesValidasUsuarioYContrasena(String userName, String password) {
         OnStage.theActorInTheSpotlight().attemptsTo(
                 LoginTask.withCredentials(userName, password)
         );
@@ -55,13 +60,23 @@ public class ShoppingStep {
     }
 
     @When("realiza la compra con información {string}, {string}, {string} y un total {string}")
-    public void realizaLaCompraConInformaciónYUnTotal$(String firstName, String lastName, String postalCode, String totalPrice) {
-
+    public void realizaLaCompraConInformacionYUnTotal$(String firstName, String lastName, String postalCode, String totalPrice) {
+        OnStage.theActorInTheSpotlight().attemptsTo(
+                GoToOtherPage.withLink(BUTTON_GO_FORM_CHECKOUT, "se dirige al formulario para completar su información"),
+                SendFormCheckoutTask.withData(firstName, lastName, postalCode)
+        );
+        OnStage.theActorInTheSpotlight().should(
+                GivenWhenThen.seeThat("El precio total de la compra sería " + totalPrice,
+                        SentCheckoutQuestion.verifyTotalPrice(totalPrice), equalTo(true))
+        );
+        OnStage.theActorInTheSpotlight().attemptsTo(
+                GoToOtherPage.withLink(BUTTON_GO_FINISH_CHECKOUT, "finaliza la compra")
+        );
 
     }
 
     @Then("debería ver el mensaje de confirmación de pedido {string}")
-    public void deberíaVerElMensajeDeConfirmaciónDePedido(String message) {
+    public void deberiaVerElMensajeDeConfirmacionDePedido(String message) {
 
     }
 
