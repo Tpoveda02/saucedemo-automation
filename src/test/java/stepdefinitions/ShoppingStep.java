@@ -8,6 +8,7 @@ import io.cucumber.java.en.When;
 import net.serenitybdd.screenplay.GivenWhenThen;
 import net.serenitybdd.screenplay.actors.OnStage;
 import questions.AddProductQuestion;
+import questions.MessageConfirmationQuestion;
 import questions.SentCheckoutQuestion;
 import tasks.AddProductTask;
 import tasks.GoToOtherPage;
@@ -19,6 +20,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 import static userinterfaces.CartPage.BUTTON_GO_FORM_CHECKOUT;
 import static userinterfaces.CheckoutOverviewPage.BUTTON_GO_FINISH_CHECKOUT;
+import static userinterfaces.FinishCheckoutPage.MESSAGE_COMPLETE;
 import static userinterfaces.ProductPage.LINK_GO_CART;
 
 public class ShoppingStep {
@@ -77,7 +79,10 @@ public class ShoppingStep {
 
     @Then("debería ver el mensaje de confirmación de pedido {string}")
     public void deberiaVerElMensajeDeConfirmacionDePedido(String message) {
-
+        OnStage.theActorInTheSpotlight().should(
+                GivenWhenThen.seeThat("El mensaje de confirmación sería " + message,
+                        MessageConfirmationQuestion.verifyContentOfMessage(message, MESSAGE_COMPLETE), equalTo(true))
+        );
     }
 
 }

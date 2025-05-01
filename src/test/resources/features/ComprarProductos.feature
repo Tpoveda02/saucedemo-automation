@@ -5,7 +5,7 @@ Feature: Realizar una compra en saucedemo
     When ingresa sus credenciales válidas: usuario "standard_user" y contraseña "secret_sauce"
     And agrega los productos "<product1>" y "<product2>" al carrito
     And realiza la compra con información "<first_name>", "<last_name>", "<postal_code>" y un total "<price_total>"
-    Then debería ver el mensaje de confirmación de pedido "THANK YOU FOR YOUR ORDER"
+    Then debería ver el mensaje de confirmación de pedido "Thank you for your order!"
 
     Examples:
       | product1                         | product2                   | first_name | last_name | postal_code | price_total  |
