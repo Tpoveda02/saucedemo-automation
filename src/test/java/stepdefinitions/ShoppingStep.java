@@ -5,10 +5,16 @@ import hook.OpenBrowser;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import net.serenitybdd.screenplay.GivenWhenThen;
 import net.serenitybdd.screenplay.actors.OnStage;
+import questions.AddProductQuestion;
+import tasks.AddProductTask;
+import tasks.GoToOtherPage;
 import tasks.LoginTask;
 
 import static constants.Constants.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static userinterfaces.ProductPage.LINK_GO_CART;
 
 public class ShoppingStep {
 
@@ -29,6 +35,22 @@ public class ShoppingStep {
 
     @When("agrega los productos {string} y {string} al carrito")
     public void agregaLosProductosYAlCarrito(String product1, String product2) {
+        OnStage.theActorInTheSpotlight().attemptsTo(
+                AddProductTask.withProduct(product1),
+                AddProductTask.withProduct(product2),
+                GoToOtherPage.withLink(LINK_GO_CART, "se dirige al carrito de compras")
+        );
+
+        OnStage.theActorInTheSpotlight().should(
+                GivenWhenThen.seeThat("El producto " + product1 + " está en la lista",
+                        AddProductQuestion.verifyIfAddedProduct(product1), equalTo(true)
+                )
+        );
+
+        OnStage.theActorInTheSpotlight().should(
+                GivenWhenThen.seeThat("El producto " + product2 + " está en la lista",
+                        AddProductQuestion.verifyIfAddedProduct(product2), equalTo(true))
+        );
 
     }
 
