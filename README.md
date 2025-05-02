@@ -13,10 +13,10 @@ Asegúrate de tener instalado en tu sistema:
 > Puedes verificar tus versiones instaladas con los siguientes comandos:
 java -version
 gradle -v
-> En caso de NO tener JDK 17 deberá configurarlo en sus variables de entorno, para realizar la ejecución
+#### En caso de NO tener JDK 17 deberá configurarlo en sus variables de entorno, para realizar la ejecución
 ## 📥 Clonar el Repositorio
 > git clone https://github.com/Tpoveda02/saucedemo-automation.git
-# Acceder al proyecto
+### Acceder al proyecto
 > cd saucedemo-automation
 
 ## 🚀 Ejecutar las Pruebas
@@ -27,11 +27,11 @@ Una vez finalizada la ejecución, abre el reporte de Serenity:
 > start target\site\serenity\index.html
 
 ## 🛠️ Tecnologías Usadas
-# Java 17
-# Gradle 7.6
-# Serenity BDD
-# JUnit
-# Selenium WebDriver
+### Java 17
+### Gradle 7.6
+### Serenity BDD
+### JUnit
+### Selenium WebDriver
 
 ## 👤 Autor
-# Tpoveda02
+### Tpoveda02
