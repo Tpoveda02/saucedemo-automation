@@ -16,7 +16,7 @@ gradle -v
 > En caso de NO tener JDK 17 deberá configurarlo en sus variables de entorno, para realizar la ejecución
 ## 📥 Clonar el Repositorio
 > git clone https://github.com/Tpoveda02/saucedemo-automation.git
-
+Acceder al proyecto
 > cd saucedemo-automation
 
 ## 🚀 Ejecutar las Pruebas
